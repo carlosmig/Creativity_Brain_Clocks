@@ -17,23 +17,7 @@ We developed and tested brain age prediction models, spin-based surrogate testin
 Repository Structure
 --------------------
 
-.
-├── Gaming/                  # Data and analysis scripts for the gaming group
-├── Global_coupling/        # Global coupling parameter files
-├── Learning/               # Pre/post training data and actions-per-minute analysis
-├── Musicians/              # Data and scripts for the music expert group
-├── Tango/                  # Data and scripts for tango dancers
-├── Visual/                 # Data and scripts for visual artists
-├── Training_SVMs_Data/     # Data matrices and labels for ML models
-├── neurosynth_spin_test/   # Code and data for cognitive decoding and spin test
-│   ├── AAL_coordinates.txt
-│   ├── parcellated_data.npy
-│   └── cognitive_terms.npy
-├── Main_Script.py          # Main script to reproduce key figures and results
-├── params_SVM.npy          # Saved parameters for the SVM models
-├── experts.svg             # Word cloud visualization for expert group correlations
-├── training.svg            # Word cloud visualization for training-related terms
-├── README.md               # This file
+<pre> ```bash . ├── Gaming/ # Data and analysis scripts for the gaming group ├── Global_coupling/ # Global coupling model and parameter files ├── Learning/ # Pre/post training data and actions-per-minute analysis ├── Musicians/ # Data and scripts for the music expert group ├── Tango/ # Data and scripts for tango dancers ├── Visual/ # Data and scripts for visual artists ├── Training_SVMs_Data/ # Data matrices and labels for ML models ├── neurosynth_spin_test/ # Code and data for cognitive decoding and spin test │ ├── AAL_coordinates.txt │ ├── parcellated_data.npy │ └── cognitive_terms.npy ├── Main_Script.py # Main script to reproduce key figures and results ├── params_SVM.npy # Saved parameters for the SVM models ├── experts.svg # Word cloud visualization for expert group correlations ├── training.svg # Word cloud visualization for training-related terms ├── README.md # This file ``` </pre>
 
 
 Getting Started
