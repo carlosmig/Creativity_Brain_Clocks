@@ -3,13 +3,13 @@ Creative Experiences and Brain Clocks
 ===========================================
 
 Coronel-Oliveros, C., Migeot, Lehue, F. J., Amoruso, L., Kowalczyk-Grębska, N., Jakubowska, N., Mandke, K. N., ... Ibanez, A. (2025).
-Creative experiences and brain health clocks. Nature Communications.
+Creative experiences and brain clocks. Nature Communications.
 
 
 Overview
 --------
 
-This repository contains the code, data organization, and materials for the study "Creative Experiences and Brain Health Clocks", which investigates how different creative practices (e.g., music, dance, gaming, visual arts) influence brain aging and cognitive resilience using neuroimaging, machine learning, and neurocognitive mapping tools.
+This repository contains the code, data organization, and materials for the study "Creative Experiences and Brain Clocks", which investigates how different creative practices (e.g., music, dance, gaming, visual arts) influence brain aging and cognitive resilience using neuroimaging, machine learning, and neurocognitive mapping tools.
 
 We developed and tested brain age prediction models, spin-based surrogate testing, functional connectivity analyses, and cognitive decoding, combining these with behavioral data on creative expertise and training interventions.
 
@@ -81,7 +81,7 @@ Citation
 If you use this repository, please cite:
 
 Coronel-Oliveros, C., Migeot, Lehue, F. J., Amoruso, L., Kowalczyk-Grębska, N., Jakubowska, N., Mandke, K. N., ... Ibanez, A. (2025).
-Creative experiences and brain health clocks. Nature Communications.
+Creative experiences and brain clocks. Nature Communications.
 
 Contact
 -------
