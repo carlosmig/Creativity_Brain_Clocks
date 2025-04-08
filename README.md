@@ -13,15 +13,24 @@ This repository contains the code, data organization, and materials for the stud
 
 We developed and tested brain age prediction models, spin-based surrogate testing, functional connectivity analyses, and cognitive decoding, combining these with behavioral data on creative expertise and training interventions.
 
+## Repository Structure
 
-Repository Structure
---------------------
-
-<pre> ```bash . ├── Gaming/ # Data and analysis scripts for the gaming group ├── Global_coupling/ # Global coupling model and parameter files ├── Learning/ # Pre/post training data and actions-per-minute analysis ├── Musicians/ # Data and scripts for the music expert group ├── Tango/ # Data and scripts for tango dancers ├── Visual/ # Data and scripts for visual artists ├── Training_SVMs_Data/ # Data matrices and labels for ML models ├── neurosynth_spin_test/ # Code and data for cognitive decoding and spin test │ ├── AAL_coordinates.txt │ ├── parcellated_data.npy │ └── cognitive_terms.npy ├── Main_Script.py # Main script to reproduce key figures and results ├── params_SVM.npy # Saved parameters for the SVM models ├── experts.svg # Word cloud visualization for expert group correlations ├── training.svg # Word cloud visualization for training-related terms ├── README.md # This file ``` </pre>
-
-
-Getting Started
----------------
+- **Gaming/** – Data and analysis scripts for the gaming group.
+- **Global_coupling/** – Global coupling model and parameter files.
+- **Learning/** – Pre/post training data and actions-per-minute analysis (APM).
+- **Musicians/** – Data and scripts for the music expert group.
+- **Tango/** – Data and scripts for tango dancers.
+- **Visual/** – Data and scripts for visual artists.
+- **Training_SVMs_Data/** – Data matrices and labels for machine learning models.
+- **neurosynth_spin_test/** – Code and files for cognitive decoding and spin tests:
+  - `AAL_coordinates.txt` – Region coordinates used for distance matrix.
+  - `parcellated_data.npy` – Neurosynth activation maps per term.
+  - `cognitive_terms.npy` – List of cognitive term labels.
+- **Main_Script.py** – Main pipeline script to reproduce figures and analyses.
+- **params_SVM.npy** – Saved hyperparameters for support vector machine models.
+- **experts.svg** – Word cloud visualization of top cognitive correlations for experts.
+- **training.svg** – Word cloud visualization of top cognitive correlations for the training group.
+- **README.md** – This file.
 
 ### Requirements
 
