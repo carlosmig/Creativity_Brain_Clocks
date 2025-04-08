@@ -90,12 +90,6 @@ If you use this repository, please cite:
 Coronel-Oliveros, C., Migeot, Lehue, F. J., Amoruso, L., Kowalczyk-Grębska, N., Jakubowska, N., Mandke, K. N., ... Ibanez, A. (2025).
 Creative experiences and brain health clocks. Nature Communications.
 
-License
--------
-
-This project is released under the MIT License. See LICENSE for details.
-
-
 Contact
 -------
 
