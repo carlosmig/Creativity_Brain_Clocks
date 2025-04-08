@@ -1,5 +1,5 @@
 
-Creative Experiences and Brain Health Clocks
+Creative Experiences and Brain Clocks
 ===========================================
 
 Coronel-Oliveros, C., Migeot, Lehue, F. J., Amoruso, L., Kowalczyk-Grębska, N., Jakubowska, N., Mandke, K. N., ... Ibanez, A. (2025).
