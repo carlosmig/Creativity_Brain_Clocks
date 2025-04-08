@@ -16,8 +16,6 @@ from sklearn.model_selection import KFold
 from statsmodels.stats.multitest import multipletests
 import nibabel as nb
 from wordcloud import WordCloud
-from matplotlib.colors import Normalize
-from matplotlib.cm import ScalarMappable
 from brainsmash.mapgen.base import Base
 from scipy.spatial.distance import pdist, squareform
 from neuromaps.datasets import fetch_fslr
