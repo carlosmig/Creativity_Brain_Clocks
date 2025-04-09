@@ -218,21 +218,6 @@ gap_sonata_pre = np.zeros((n_splits, reps, vectorized_sonata_pre.shape[1]))
 gap_sonata_post_active = np.zeros((n_splits, reps, vectorized_sonata_post_active.shape[1]))
 gap_sonata_pre_active = np.zeros((n_splits, reps, vectorized_sonata_pre_active.shape[1]))
 
-# Same but without age bias correction
-gap_high_tango_nobias = np.zeros((n_splits, reps, vectorized_high_tango.shape[1]))
-gap_low_tango_nobias = np.zeros((n_splits, reps, vectorized_low_tango.shape[1]))
-gap_SC1_nobias = np.zeros((n_splits, reps, vectorized_SC1.shape[1]))
-gap_SC2_nobias = np.zeros((n_splits, reps, vectorized_SC2.shape[1]))
-gap_nonvisual_nobias = np.zeros((n_splits, reps, vectorized_nonvisual.shape[1]))
-gap_visual_nobias = np.zeros((n_splits, reps, vectorized_visual.shape[1]))
-gap_musicians_nobias = np.zeros((n_splits, reps, vectorized_musicians.shape[1]))
-gap_nonmusicians_nobias = np.zeros((n_splits, reps, vectorized_nonmusicians.shape[1]))
-gap_sonata_post_nobias = np.zeros((n_splits, reps, vectorized_sonata_post.shape[1]))
-gap_sonata_pre_nobias = np.zeros((n_splits, reps, vectorized_sonata_pre.shape[1]))
-gap_sonata_post_active_nobias = np.zeros((n_splits, reps, vectorized_sonata_post_active.shape[1]))
-gap_sonata_pre_active_nobias = np.zeros((n_splits, reps, vectorized_sonata_pre_active.shape[1]))
-
-
 # Array to store feature importances for each repetition and fold
 feature_importances = np.zeros((reps, n_splits, new_pairs))
 
@@ -285,67 +270,55 @@ for k in range(reps):
         X_SC1 = vectorized_SC1
         Y_pred_SC1 = regr.predict(X_SC1.T)
         gap_SC1[counter, k, :] = (Y_pred_SC1 - ages_SC1) - (a * ages_SC1 + b)
-        gap_SC1_nobias[counter, k, :] = (Y_pred_SC1 - ages_SC1)
         
         X_SC2 = vectorized_SC2
         Y_pred_SC2 = regr.predict(X_SC2.T)
         gap_SC2[counter, k, :] = (Y_pred_SC2 - ages_SC2) - (a * ages_SC2 + b)
-        gap_SC2_nobias[counter, k, :] = (Y_pred_SC2 - ages_SC2)
                    
         # Tango Experts
         X_high_tango = vectorized_high_tango
         Y_pred_high_tango = regr.predict(X_high_tango.T)
         gap_high_tango[counter, k, :] = (Y_pred_high_tango - ages_high_tango) - (a * ages_high_tango + b)
-        gap_high_tango_nobias[counter, k, :] = (Y_pred_high_tango - ages_high_tango)
         
         X_low_tango = vectorized_low_tango
         Y_pred_low_tango = regr.predict(X_low_tango.T)
         gap_low_tango[counter, k, :] = (Y_pred_low_tango - ages_low_tango) - (a * ages_low_tango + b)
-        gap_low_tango_nobias[counter, k, :] = (Y_pred_low_tango - ages_low_tango)
         
         # Musicians
         X_musicians = vectorized_musicians
         Y_pred_musicians = regr.predict(X_musicians.T)
         gap_musicians[counter, k, :] = (Y_pred_musicians - ages_musicians) - (a * ages_musicians + b)
-        gap_musicians_nobias[counter, k, :] = (Y_pred_musicians - ages_musicians)
         
         X_nonmusicians = vectorized_nonmusicians
         Y_pred_nonmusicians = regr.predict(X_nonmusicians.T)
-        gap_nonmusicians[counter, k, :] = (Y_pred_nonmusicians - ages_nonmusicians) - (a * ages_nonmusicians + b)
-        gap_nonmusicians_nobias[counter, k, :] = (Y_pred_nonmusicians - ages_nonmusicians)        
+        gap_nonmusicians[counter, k, :] = (Y_pred_nonmusicians - ages_nonmusicians) - (a * ages_nonmusicians + b)   
         
         # Learning (Sonata)
         X_sonata_pre = vectorized_sonata_pre
         Y_pred_sonata_pre = regr.predict(X_sonata_pre.T)
         gap_sonata_pre[counter, k, :] = (Y_pred_sonata_pre - ages_sonata) - (a * ages_sonata + b)
-        gap_sonata_pre_nobias[counter, k, :] = (Y_pred_sonata_pre - ages_sonata)
         
         X_sonata_post = vectorized_sonata_post
         Y_pred_sonata_post = regr.predict(X_sonata_post.T)
         gap_sonata_post[counter, k, :] = (Y_pred_sonata_post - ages_sonata) - (a * ages_sonata + b)
-        gap_sonata_post_nobias[counter, k, :] = (Y_pred_sonata_post - ages_sonata)
 
         # Active control group (Sonata)
         X_sonata_pre_active = vectorized_sonata_pre_active
         Y_pred_sonata_pre_active = regr.predict(X_sonata_pre_active.T)
         gap_sonata_pre_active[counter, k, :] = (Y_pred_sonata_pre_active - ages_sonata_active) - (a * ages_sonata_active + b)
-        gap_sonata_pre_active_nobias[counter, k, :] = (Y_pred_sonata_pre_active - ages_sonata_active)
         
         X_sonata_post_active = vectorized_sonata_post_active
         Y_pred_sonata_post_active = regr.predict(X_sonata_post_active.T)
         gap_sonata_post_active[counter, k, :] = (Y_pred_sonata_post_active - ages_sonata_active) - (a * ages_sonata_active + b)
-        gap_sonata_post_active_nobias[counter, k, :] = (Y_pred_sonata_post_active - ages_sonata_active)
         
         # Visual group
         X_visual = vectorized_visual
         Y_pred_visual = regr.predict(X_visual.T)
         gap_visual[counter, k, :] = (Y_pred_visual - ages_visual) - (a * ages_visual + b)
-        gap_visual_nobias[counter, k, :] = (Y_pred_visual - ages_visual)
         
         X_nonvisual = vectorized_nonvisual
         Y_pred_nonvisual = regr.predict(X_nonvisual.T)
         gap_nonvisual[counter, k, :] = (Y_pred_nonvisual - ages_nonvisual) - (a * ages_nonvisual + b)
-        gap_nonvisual_nobias[counter, k, :] = (Y_pred_nonvisual - ages_nonvisual)
 
         # Extract top 10 features from the trained SVM model
         feature_importances[k, counter, :] = regr.coef_
@@ -508,10 +481,10 @@ plt.yticks([-15, 0, 15, 30], fontsize=15)
 # Learners control group
 ax = plt.subplot(2, 3, 6)
 violin_plot(ax, [gap_sonata_post_active, gap_sonata_pre_active], ['skyblue', 'salmon'], 0.8, 20, 20)
-print_stats("Learners (control)", gap_sonata_post_active, gap_sonata_pre_active, paired=True)
+print_stats("Active control", gap_sonata_post_active, gap_sonata_pre_active, paired=True)
 plt.ylabel('BAG (years)', fontsize=18)
 plt.xlabel('Conditions', fontsize=18)
-plt.title('Learners (control)', fontsize=18)
+plt.title('Active control', fontsize=18)
 plt.ylim(-15 - 2.25, 30)
 plt.xticks([0, 1], ['Post', 'Pre'], fontsize=15)
 plt.yticks([-15, 0, 15, 30], fontsize=15)
@@ -569,7 +542,7 @@ labels.append("Learners")
 t_stat, p_val = stats.ttest_rel(gap_sonata_post_active, gap_sonata_pre_active)
 ...
 pvals.append(p_val)
-labels.append("Learners (control)")
+labels.append("Active control")
 
 # After all groups are tested: FDR correction
 _, pvals_corrected, _, _ = multipletests(pvals, alpha=0.05, method='fdr_bh')
