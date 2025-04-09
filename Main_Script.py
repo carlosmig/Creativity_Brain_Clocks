@@ -108,7 +108,11 @@ def set_limits_and_ticks(ax, x_low, x_high, y_low, y_high):
 
 #%%
 # Data for training the SVMs (1240 participants + data augmentation)
-input_FCs = np.load('Training_SVMs_Data/FCs_training_augmented.npy')
+input_FCs_1 = np.load('Training_SVMs_Data/FCs_training_augmented_1.npy')
+input_FCs_2 = np.load('Training_SVMs_Data/FCs_training_augmented_2.npy')
+input_FCs_3 = np.load('Training_SVMs_Data/FCs_training_augmented_3.npy')
+input_FCs_4 = np.load('Training_SVMs_Data/FCs_training_augmented_4.npy')
+input_FCs = np.concatenate((input_FCs_1, input_FCs_2, input_FCs_3, input_FCs_4), axis = 2)
 input_ages = np.load('Training_SVMs_Data/ages_training_augmented.npy')
 
 # Tango
@@ -512,6 +516,11 @@ plt.ylim(-15 - 2.25, 30)
 plt.xticks([0, 1], ['Post', 'Pre'], fontsize=15)
 plt.yticks([-15, 0, 15, 30], fontsize=15)
 
+# All groups (expertise design)
+print("____________________________________________________")
+print_stats("All experts vs non-experts", all_gaps_experts, all_gaps_nonexperts, paired=False)
+print("____________________________________________________")
+
 # Adjust layout
 plt.tight_layout()
 
@@ -524,7 +533,6 @@ labels = []
 t_stat, p_val = stats.ttest_ind(gap_high_tango, gap_low_tango)
 d = cohen_d(gap_high_tango, gap_low_tango)
 delta = np.mean(gap_high_tango) - np.mean(gap_low_tango)
-print(f"Tango dancers, ΔBAGs = {delta:.4f}, t = {t_stat:.4f}, p = {p_val:.4f}, d = {d:.4f}")
 pvals.append(p_val)
 labels.append("Tango dancers")
 
@@ -570,6 +578,8 @@ _, pvals_corrected, _, _ = multipletests(pvals, alpha=0.05, method='fdr_bh')
 print("\nFDR-corrected p-values:")
 for label, p_corr in zip(labels, pvals_corrected):
     print(f"{label}: corrected p = {p_corr:.4f}")
+
+
 
 #%%
 
