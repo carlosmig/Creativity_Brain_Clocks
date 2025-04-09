@@ -15,16 +15,16 @@ We developed and tested brain age prediction models, spin-based surrogate testin
 
 ## Repository Structure
 
-- **Gaming/** – Data and analysis scripts for the gaming group.
+- **Gaming/** – Data for the gaming group.
 - **Global_coupling/** – Global coupling model and parameter files.
 - **Learning/** – Pre/post training data and actions-per-minute analysis (APM).
-- **Musicians/** – Data and scripts for the music expert group.
-- **Tango/** – Data and scripts for tango dancers.
-- **Visual/** – Data and scripts for visual artists.
+- **Musicians/** – Data for the music expert group.
+- **Tango/** – Data for tango dancers.
+- **Visual/** – Data for visual artists.
 - **Training_SVMs_Data/** – Data matrices and labels for machine learning models.
 - **neurosynth_spin_test/** – Code and files for cognitive decoding and spin tests:
   - `AAL_coordinates.txt` – Region coordinates used for distance matrix.
-  - `parcellated_data.npy` – Neurosynth activation maps per term.
+  - `parcellated_data.npy` – Neurosynth associations maps per term.
   - `cognitive_terms.npy` – List of cognitive term labels.
   - `Ds_files` – Different brain maps for spatial autocorrelations.
 - **Main_Script.py** – Main pipeline script to reproduce figures and analyses.
@@ -66,7 +66,7 @@ Key Features
 
 - Brain Age Prediction: Models estimating brain age using functional connectivity data across creative domains.
 - Group Comparisons: Contrasts between experts and non-experts in music, dance, gaming, and visual arts.
-- Training Effects: Longitudinal assessment of training (e.g., Sonata project) on brain health metrics.
+- Training Effects: Longitudinal assessment of training (e.g., Sonata project) on brain age gaps.
 - Cognitive Decoding: Mapping neural data onto cognitive ontologies using spin tests and surrogate null models.
 - Visualization: Word clouds, violin plots, cortical projections using surface-based mapping (e.g., FsLR surfaces).
 
