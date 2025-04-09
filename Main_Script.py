@@ -131,11 +131,11 @@ FCs_SC2 = np.load("Gaming/FCs_SC2.npy")
 playing_time = np.load("Gaming/playing_time.npy")
 
 # Visual
-ages_nonvisual = np.load("Visual/ages_nonvisual.npy")
 ages_visual = np.load("Visual/ages_visual.npy")
-experience_visual = np.load("Visual/experience_visual.npy")
+ages_nonvisual = np.load("Visual/ages_nonvisual.npy")
 FCs_nonvisual = np.load("Visual/FCs_nonvisual.npy")
 FCs_visual = np.load("Visual/FCs_visual.npy")
+experience_visual = np.load("Visual/experience_visual.npy")
 
 # musicians
 ages_musicians = np.load("Musicians/ages_musicians.npy")
