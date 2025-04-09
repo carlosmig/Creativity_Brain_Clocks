@@ -26,10 +26,12 @@ We developed and tested brain age prediction models, spin-based surrogate testin
   - `AAL_coordinates.txt` – Region coordinates used for distance matrix.
   - `parcellated_data.npy` – Neurosynth activation maps per term.
   - `cognitive_terms.npy` – List of cognitive term labels.
+  - `Ds_files` – Different brain maps for spatial autocorrelations.
 - **Main_Script.py** – Main pipeline script to reproduce figures and analyses.
 - **params_SVM.npy** – Saved hyperparameters for support vector machine models.
 - **experts.svg** – Word cloud visualization of top cognitive correlations for experts.
 - **training.svg** – Word cloud visualization of top cognitive correlations for the training group.
+- **plot_violins.py** – Customized violin plots. 
 - **README.md** – This file.
 
 ### Requirements
@@ -55,15 +57,9 @@ We developed and tested brain age prediction models, spin-based surrogate testin
 1. Clone the repository:
    git clone https://github.com/<your-org-or-username>/brain-health-clocks.git
    cd brain-health-clocks
-
-2. (Optional) Create a virtual environment:
-   python -m venv venv
-   source venv/bin/activate  # or venv\Scripts\activate on Windows
-   pip install -r requirements.txt
-
-3. Run the main script to generate plots:
+   
+2. Run the main script to generate plots:
    python Main_Script.py
-
 
 Key Features
 ------------
