@@ -137,13 +137,6 @@ FCs_nonvisual = np.load("Visual/FCs_nonvisual.npy")
 FCs_visual = np.load("Visual/FCs_visual.npy")
 experience_visual = np.load("Visual/experience_visual.npy")
 
-# musicians
-ages_musicians = np.load("Musicians/ages_musicians.npy")
-ages_nonmusicians = np.load("Musicians/ages_nonmusicians.npy")
-FCs_musicians = np.load("Musicians/FCs_musicians.npy")
-FCs_nonmusicians = np.load("Musicians/FCs_nonmusicians.npy")
-years_music = np.load("Musicians/years_music.npy")
-
 # Learning
 ages_sonata = np.load("Learning/ages_sonata.npy")
 APM_post = np.load("Learning/APM_post.npy")
@@ -175,9 +168,7 @@ vectorized_low_tango = (FCs_low_tango[triu_idx, :].T).T
 vectorized_SC1 = (FCs_SC1[triu_idx, :].T).T
 vectorized_SC2 = (FCs_SC2[triu_idx, :].T).T
 vectorized_nonvisual = (FCs_nonvisual[triu_idx, :].T).T
-vectorized_visual = (FCs_visual[triu_idx, :].T).T
-vectorized_musicians = (FCs_musicians[triu_idx, :].T).T
-vectorized_nonmusicians = (FCs_nonmusicians[triu_idx, :].T).T	
+vectorized_visual = (FCs_visual[triu_idx, :].T).T	
 vectorized_sonata_post = (FCs_sonata_post[triu_idx, :].T).T
 vectorized_sonata_pre = (FCs_sonata_pre[triu_idx, :].T).T
 vectorized_sonata_post_active = (FCs_sonata_post_active[triu_idx, :].T).T
@@ -211,8 +202,6 @@ gap_SC1 = np.zeros((n_splits, reps, vectorized_SC1.shape[1]))
 gap_SC2 = np.zeros((n_splits, reps, vectorized_SC2.shape[1]))
 gap_nonvisual = np.zeros((n_splits, reps, vectorized_nonvisual.shape[1]))
 gap_visual = np.zeros((n_splits, reps, vectorized_visual.shape[1]))
-gap_musicians = np.zeros((n_splits, reps, vectorized_musicians.shape[1]))
-gap_nonmusicians = np.zeros((n_splits, reps, vectorized_nonmusicians.shape[1]))
 gap_sonata_post = np.zeros((n_splits, reps, vectorized_sonata_post.shape[1]))
 gap_sonata_pre = np.zeros((n_splits, reps, vectorized_sonata_pre.shape[1]))
 gap_sonata_post_active = np.zeros((n_splits, reps, vectorized_sonata_post_active.shape[1]))
@@ -284,15 +273,6 @@ for k in range(reps):
         Y_pred_low_tango = regr.predict(X_low_tango.T)
         gap_low_tango[counter, k, :] = (Y_pred_low_tango - ages_low_tango) - (a * ages_low_tango + b)
         
-        # Musicians
-        X_musicians = vectorized_musicians
-        Y_pred_musicians = regr.predict(X_musicians.T)
-        gap_musicians[counter, k, :] = (Y_pred_musicians - ages_musicians) - (a * ages_musicians + b)
-        
-        X_nonmusicians = vectorized_nonmusicians
-        Y_pred_nonmusicians = regr.predict(X_nonmusicians.T)
-        gap_nonmusicians[counter, k, :] = (Y_pred_nonmusicians - ages_nonmusicians) - (a * ages_nonmusicians + b)   
-        
         # Learning (Sonata)
         X_sonata_pre = vectorized_sonata_pre
         Y_pred_sonata_pre = regr.predict(X_sonata_pre.T)
@@ -341,8 +321,6 @@ gap_SC1 = np.mean(np.mean(gap_SC1, 0), 0)
 gap_SC2 = np.mean(np.mean(gap_SC2, 0), 0)
 gap_nonvisual = np.mean(np.mean(gap_nonvisual, 0), 0)
 gap_visual = np.mean(np.mean(gap_visual, 0), 0)
-gap_musicians = np.mean(np.mean(gap_musicians, 0), 0)
-gap_nonmusicians = np.mean(np.mean(gap_nonmusicians, 0), 0)
 gap_sonata_post = np.mean(np.mean(gap_sonata_post, 0), 0)
 gap_sonata_pre = np.mean(np.mean(gap_sonata_pre, 0), 0)
 gap_sonata_post_active = np.mean(np.mean(gap_sonata_post_active, 0), 0)
@@ -352,8 +330,7 @@ gap_sonata_pre_active = np.mean(np.mean(gap_sonata_pre_active, 0), 0)
 # For compunting the standardize brain age gaps (BAGs) across all expert groups to obtain z-scores
 all_bags = np.concatenate((gap_high_tango, gap_low_tango, 
                            gap_SC1, gap_SC2, 
-                           gap_visual, gap_nonvisual, 
-                           gap_musicians, gap_nonmusicians)) 
+                           gap_visual, gap_nonvisual)) 
 
 # Adjust gaps for each group by subtracting their pairwise mean
 mean_gaming = 0.5 * (np.mean(gap_SC1) + np.mean(gap_SC2))
@@ -365,19 +342,11 @@ gap_high_tango, gap_low_tango = gap_high_tango - mean_tango, gap_low_tango - mea
 mean_visual = 0.5 * (np.mean(gap_visual) + np.mean(gap_nonvisual))
 gap_visual, gap_nonvisual = gap_visual - mean_visual, gap_nonvisual - mean_visual
 
-mean_musicians = 0.5 * (np.mean(gap_musicians) + np.mean(gap_nonmusicians))
-gap_musicians, gap_nonmusicians = gap_musicians - mean_musicians, gap_nonmusicians - mean_musicians
-
 mean_sonata = 0.5 * (np.mean(gap_sonata_post) + np.mean(gap_sonata_pre))
 gap_sonata_post, gap_sonata_pre = gap_sonata_post - mean_sonata, gap_sonata_pre - mean_sonata
 
 mean_sonata_active = 0.5 * (np.mean(gap_sonata_post_active) + np.mean(gap_sonata_pre_active))
 gap_sonata_post_active, gap_sonata_pre_active = gap_sonata_post_active - mean_sonata_active, gap_sonata_pre_active - mean_sonata_active
-
-all_gaps_experts = np.concatenate((gap_high_tango, gap_SC1, gap_visual, gap_musicians))
-all_gaps_nonexperts = np.concatenate((gap_low_tango, gap_SC2, gap_nonvisual, gap_nonmusicians))
-
-
 
 
 #%%
@@ -436,8 +405,6 @@ plt.yticks([-35, -5, 25, 55], fontsize=15)
 
 # Musicians group
 ax = plt.subplot(2, 3, 2)
-violin_plot(ax, [gap_musicians, gap_nonmusicians], ['skyblue', 'salmon'], 0.8, 20, 20)
-print_stats("Musicians", gap_musicians, gap_nonmusicians)
 plt.ylabel('BAG (years)', fontsize=18)
 plt.xlabel('Groups', fontsize=18)
 plt.title('Musicians', fontsize=18)
@@ -489,10 +456,6 @@ plt.ylim(-15 - 2.25, 30)
 plt.xticks([0, 1], ['Post', 'Pre'], fontsize=15)
 plt.yticks([-15, 0, 15, 30], fontsize=15)
 
-# All groups (expertise design)
-print("____________________________________________________")
-print_stats("All experts vs non-experts", all_gaps_experts, all_gaps_nonexperts, paired=False)
-print("____________________________________________________")
 
 # Adjust layout
 plt.tight_layout()
@@ -508,13 +471,6 @@ d = cohen_d(gap_high_tango, gap_low_tango)
 delta = np.mean(gap_high_tango) - np.mean(gap_low_tango)
 pvals.append(p_val)
 labels.append("Tango dancers")
-
-# Musicians
-...
-t_stat, p_val = stats.ttest_ind(gap_musicians, gap_nonmusicians)
-...
-pvals.append(p_val)
-labels.append("Musicians")
 
 # Visual artists
 ...
@@ -569,13 +525,11 @@ gap_tango = np.append(gap_high_tango, gap_low_tango)
 
 # Z-score normalization for expertise-related measures
 zh_tango = stats.zscore(hours_tango[hours_tango > 0])
-zh_music = stats.zscore(years_music)
 zh_games = stats.zscore(playing_time[playing_time > 0])
 zh_visual = stats.zscore(experience_visual)
 
 # Z-score normalization for BAGs
 zg_tango = stats.zscore(gap_tango)[hours_tango > 0]
-zg_music = stats.zscore(gap_musicians)
 zg_games = stats.zscore(gap_SC1)[playing_time > 0]
 zg_visual = stats.zscore(gap_visual)
 
@@ -583,8 +537,8 @@ zg_visual = stats.zscore(gap_visual)
 pvals = []
 
 # Combine data
-xt = np.concatenate((zh_tango, zh_music, zh_visual, zh_games))
-yt = np.concatenate((zg_tango, zg_music, zg_visual, zg_games))
+xt = np.concatenate((zh_tango, zh_visual, zh_games))
+yt = np.concatenate((zg_tango, zg_visual, zg_games))
 
 # Plot
 plt.scatter(xt, yt, c='darkblue', s=100, alpha=0.5)
@@ -705,7 +659,6 @@ def calculate_and_correct_metrics(FCs_group1, FCs_group2, thresholds):
 GE_high_tango, GE_low_tango, LE_high_tango, LE_low_tango = calculate_and_correct_metrics(FCs_high_tango, FCs_low_tango, thresholds)
 GE_SC1, GE_SC2, LE_SC1, LE_SC2 = calculate_and_correct_metrics(FCs_SC1, FCs_SC2, thresholds)
 GE_nonvisual, GE_visual, LE_nonvisual, LE_visual = calculate_and_correct_metrics(FCs_nonvisual, FCs_visual, thresholds)
-GE_musicians, GE_nonmusicians, LE_musicians, LE_nonmusicians = calculate_and_correct_metrics(FCs_musicians, FCs_nonmusicians, thresholds)
 GE_sonata_post, GE_sonata_pre, LE_sonata_post, LE_sonata_pre = calculate_and_correct_metrics(FCs_sonata_post, FCs_sonata_pre, thresholds)
 
 
@@ -719,10 +672,8 @@ Gs_training = np.load('Global_coupling/Gs_training.npy')
 z_bags = stats.zscore(all_bags)
 
 # Combine GE and LE metrics across expert groups
-all_GE = np.concatenate((GE_high_tango, GE_low_tango, GE_SC1, GE_SC2, GE_nonvisual, GE_visual, 
-                         GE_musicians, GE_nonmusicians))
-all_LE = np.concatenate((LE_high_tango, LE_low_tango, LE_SC1, LE_SC2, LE_nonvisual, LE_visual, 
-                         LE_musicians, LE_nonmusicians))
+all_GE = np.concatenate((GE_high_tango, GE_low_tango, GE_SC1, GE_SC2, GE_nonvisual, GE_visual))
+all_LE = np.concatenate((LE_high_tango, LE_low_tango, LE_SC1, LE_SC2, LE_nonvisual, LE_visual))
 
 ps = []
 labels = []
