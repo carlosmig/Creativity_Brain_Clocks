@@ -13,12 +13,13 @@ This repository contains the code, data organization, and materials for the stud
 
 We developed and tested brain age prediction models, spin-based surrogate testing, functional connectivity analyses, and cognitive decoding, combining these with behavioral data on creative expertise and training interventions.
 
+Individual data related to music expertise design is available upon request and was not included here due to GDPR regulations.
+
 ## Repository Structure
 
 - **Gaming/** – Data for the gaming group.
 - **Global_coupling/** – Global coupling model and parameter files.
 - **Learning/** – Pre/post training data and actions-per-minute analysis (APM).
-- **Musicians/** – Data for the music expert group.
 - **Tango/** – Data for tango dancers.
 - **Visual/** – Data for visual artists.
 - **Training_SVMs_Data/** – Data matrices and labels for machine learning models.
