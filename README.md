@@ -37,7 +37,7 @@ Individual data related to music expertise design is available upon request and 
 
 ### Requirements
 
-##Standard Python Libraries
+## Standard Python Libraries
 
 - Python 3.9+
 - NumPy
@@ -48,7 +48,7 @@ Individual data related to music expertise design is available upon request and 
 - statsmodels
 - nilearn
 
-##Additional Libraries
+## Additional Libraries
 
 - netneurotools: pip install netneurotools. https://netneurotools.readthedocs.io/en/latest/
 - wordcloud: pip install wordcloud. https://pypi.org/project/wordcloud/
