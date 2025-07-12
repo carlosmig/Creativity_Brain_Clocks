@@ -37,6 +37,8 @@ Individual data related to music expertise design is available upon request and 
 
 ### Requirements
 
+##Standard Python Libraries
+
 - Python 3.9+
 - NumPy
 - SciPy
@@ -45,13 +47,17 @@ Individual data related to music expertise design is available upon request and 
 - seaborn
 - statsmodels
 - nilearn
-- netneurotools
-- wordcloud
-- brainsmash
-- neuromaps
-- surfplot
-- bctpy
-- nibabel
+
+##Additional Libraries
+
+- netneurotools: pip install netneurotools. https://netneurotools.readthedocs.io/en/latest/
+- wordcloud: pip install wordcloud. https://pypi.org/project/wordcloud/
+- brainsmash: pip install brainsmash. https://brainsmash.readthedocs.io/en/latest/
+- neuromaps: pip install neuromaps. https://pypi.org/project/neuromaps/
+- surfplot: pip install surfplot. https://pypi.org/project/surfplot/
+- bctpy: pip install bctpy. https://pypi.org/project/bctpy/
+- networkx: pip install networkx. https://pypi.org/project/networkx/
+- nibabel: pip install nibabel. https://pypi.org/project/nibabel/
 
 ### Running the Project
 
