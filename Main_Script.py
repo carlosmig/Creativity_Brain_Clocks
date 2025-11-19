@@ -820,12 +820,16 @@ plt.clf()
 for sx in range(0, len(maps)):
 
     Ds_left = maps[sx][::2]
-    Ds_left = np.insert(Ds_left, 17, 0.2)
-    Ds_left = np.insert(Ds_left, 20, 0.2)
+    Ds_left = np.insert(Ds_left, 17, 0) 
+    Ds_left = np.insert(Ds_left, 20, 0)
     Ds_right = maps[sx][1::2]
-    Ds_right = np.insert(Ds_right, 17, 0.2)
-    Ds_right = np.insert(Ds_right, 20, 0.2)
+    Ds_right = np.insert(Ds_right, 17, 0)
+    Ds_right = np.insert(Ds_right, 20, 0)
 
+    #Comment about the 0s for brain areas 17 (L,R) and 20 (L,R)
+    #These brain areas are the amygdala and hippocampus, that were not used in our study
+    #We needed to assign values to these brain areas just for plotting, although we did not use them for any of the analyses
+    
     # Map each vertex to its corresponding value
     lh_vertex_data = np.zeros_like(lh_labels, dtype=float)
     for i in range(41):
@@ -1147,4 +1151,5 @@ plt.show()
 
 
 #%%
+
 
