@@ -820,10 +820,10 @@ plt.clf()
 for sx in range(0, len(maps)):
 
     Ds_left = maps[sx][::2]
-    Ds_left = np.insert(Ds_left, 17, 0) 
+    Ds_left = np.insert(Ds_left, 18, 0) 
     Ds_left = np.insert(Ds_left, 20, 0)
     Ds_right = maps[sx][1::2]
-    Ds_right = np.insert(Ds_right, 17, 0)
+    Ds_right = np.insert(Ds_right, 18, 0)
     Ds_right = np.insert(Ds_right, 20, 0)
 
     #Comment about the 0s for brain areas 17 (L,R) and 20 (L,R)
@@ -1151,5 +1151,6 @@ plt.show()
 
 
 #%%
+
 
 
