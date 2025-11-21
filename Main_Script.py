@@ -21,6 +21,7 @@ from scipy.spatial.distance import pdist, squareform
 from neuromaps.datasets import fetch_fslr
 from surfplot import Plot
 import time
+import pandas as pd
 import warnings
 warnings.filterwarnings('ignore') 
 
@@ -882,13 +883,21 @@ a, b, r, p = stats.linregress(corr_vec, Ds_experts)[0:4]
 plt.scatter(corr_vec, Ds_experts, s=120, alpha=0.5, color='blue')
 
 # Distance matrix
-aal_coords = np.loadtxt("neurosynth_spin_test/AAL_coordinates.txt")[0:90, 0:90]
+aal_coords = pd.read_csv("neurosynth_spin_test/AAL_coordinates.txt", sep = '\t', header = None) #x,y,z coordinates
+aal_coords = aal_coords.iloc[0:90, 0:3].to_numpy()
 dist_matrix = squareform(pdist(aal_coords))[0:90, 0:90]
 dist_matrix = np.delete(dist_matrix, np.array([36,37,40,41,70,71,72,73,74,75,76,76,77]), axis=0)
 dist_matrix = np.delete(dist_matrix, np.array([36,37,40,41,70,71,72,73,74,75,76,76,77]), axis=1)
 
 # Surrogate testing
-base_D = Base(x=Ds_experts, D=dist_matrix)
+base_D = Base(x=Ds_experts, D=dist_matrix,
+              deltas=np.array([0.1]),
+              kernel='exp',
+              pv=25,
+              nh=20,
+              resample=False,
+              seed=0,
+              n_jobs=8)
 surr_number = 10000
 surrogates_D = base_D(n=surr_number)
 
@@ -925,7 +934,14 @@ a, b, r, p = stats.linregress(corr_vec, Ds_training)[0:4]
 plt.scatter(corr_vec, Ds_training, s=120, alpha=0.5, color='red')
 
 # Surrogate testing
-base_D = Base(x=Ds_training, D=dist_matrix)
+base_D = Base(x=Ds_training, D=dist_matrix,
+              deltas=np.array([0.1]),
+              kernel='exp',
+              pv=25,
+              nh=20,
+              resample=False,
+              seed=0,
+              n_jobs=8)
 surrogates_D = base_D(n=surr_number)
 
 true_corr = stats.pearsonr(corr_vec, Ds_training)[0]
@@ -961,11 +977,25 @@ for label, corrected_p in zip(labels, pvals_corrected):
 
 #%%
 #surrogate data
-base_experts = Base(x = Ds_experts, D = dist_matrix)
+base_experts = Base(x = Ds_experts, D = dist_matrix,
+                    deltas=np.array([0.1]),
+                    kernel='exp',
+                    pv=25,
+                    nh=20,
+                    resample=False,
+                    seed=0,
+                    n_jobs=8)
 surr_number = 10000
 surrogates_experts = base_experts(n = surr_number)
 
-base_training = Base(x = Ds_training, D = dist_matrix)
+base_training = Base(x = Ds_training, D = dist_matrix,
+                     deltas=np.array([0.1]),
+                     kernel='exp',
+                     pv=25,
+                     nh=20,
+                     resample=False,
+                     seed=0,
+                     n_jobs=8)
 surr_number = 10000
 surrogates_training = base_training(n = surr_number)
 
@@ -1151,6 +1181,7 @@ plt.show()
 
 
 #%%
+
 
 
 
