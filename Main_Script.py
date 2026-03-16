@@ -890,14 +890,7 @@ dist_matrix = np.delete(dist_matrix, np.array([36,37,40,41,70,71,72,73,74,75,76,
 dist_matrix = np.delete(dist_matrix, np.array([36,37,40,41,70,71,72,73,74,75,76,76,77]), axis=1)
 
 # Surrogate testing
-base_D = Base(x=Ds_experts, D=dist_matrix,
-              deltas=np.array([0.1]),
-              kernel='exp',
-              pv=25,
-              nh=20,
-              resample=False,
-              seed=0,
-              n_jobs=8)
+base_D = Base(x=Ds_experts, D=dist_matrix)
 surr_number = 10000
 surrogates_D = base_D(n=surr_number)
 
@@ -934,14 +927,7 @@ a, b, r, p = stats.linregress(corr_vec, Ds_training)[0:4]
 plt.scatter(corr_vec, Ds_training, s=120, alpha=0.5, color='red')
 
 # Surrogate testing
-base_D = Base(x=Ds_training, D=dist_matrix,
-              deltas=np.array([0.1]),
-              kernel='exp',
-              pv=25,
-              nh=20,
-              resample=False,
-              seed=0,
-              n_jobs=8)
+base_D = Base(x=Ds_training, D=dist_matrix)
 surrogates_D = base_D(n=surr_number)
 
 true_corr = stats.pearsonr(corr_vec, Ds_training)[0]
@@ -977,25 +963,11 @@ for label, corrected_p in zip(labels, pvals_corrected):
 
 #%%
 #surrogate data
-base_experts = Base(x = Ds_experts, D = dist_matrix,
-                    deltas=np.array([0.1]),
-                    kernel='exp',
-                    pv=25,
-                    nh=20,
-                    resample=False,
-                    seed=0,
-                    n_jobs=8)
+base_experts = Base(x = Ds_experts, D = dist_matrix)
 surr_number = 10000
 surrogates_experts = base_experts(n = surr_number)
 
-base_training = Base(x = Ds_training, D = dist_matrix,
-                     deltas=np.array([0.1]),
-                     kernel='exp',
-                     pv=25,
-                     nh=20,
-                     resample=False,
-                     seed=0,
-                     n_jobs=8)
+base_training = Base(x = Ds_training, D = dist_matrix)
 surr_number = 10000
 surrogates_training = base_training(n = surr_number)
 
