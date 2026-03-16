@@ -883,7 +883,7 @@ a, b, r, p = stats.linregress(corr_vec, Ds_experts)[0:4]
 plt.scatter(corr_vec, Ds_experts, s=120, alpha=0.5, color='blue')
 
 # Distance matrix
-aal_coords = pd.read_csv("neurosynth_spin_test/AAL_coordinates.txt", sep = '\t', header = None) #x,y,z coordinates
+aal_coords = pd.read_csv("neurosynth_spin_test/AAL_coordinates.txt", sep = ' ', header = None) #x,y,z coordinates
 aal_coords = aal_coords.iloc[0:90, 0:3].to_numpy()
 dist_matrix = squareform(pdist(aal_coords))[0:90, 0:90]
 dist_matrix = np.delete(dist_matrix, np.array([36,37,40,41,70,71,72,73,74,75,76,76,77]), axis=0)
