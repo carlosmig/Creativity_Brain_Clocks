@@ -62,8 +62,8 @@ Individual data related to music expertise design is available upon request and 
 ### Running the Project
 
 1. Clone the repository:
-   git clone https://github.com/<your-org-or-username>/brain-health-clocks.git
-   cd brain-health-clocks
+   git clone https://github.com/<your-org-or-username>/Creativity_Brain_Clocks.git
+   cd Creativity_Brain_Clocks
    
 2. Run the main script to generate plots:
    python Main_Script.py
