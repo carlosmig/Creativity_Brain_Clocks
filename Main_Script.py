@@ -131,13 +131,6 @@ FCs_SC1 = np.load("Gaming/FCs_SC1.npy")
 FCs_SC2 = np.load("Gaming/FCs_SC2.npy")
 playing_time = np.load("Gaming/playing_time.npy")
 
-# Visual
-ages_visual = np.load("Visual/ages_visual.npy")
-ages_nonvisual = np.load("Visual/ages_nonvisual.npy")
-FCs_nonvisual = np.load("Visual/FCs_nonvisual.npy")
-FCs_visual = np.load("Visual/FCs_visual.npy")
-experience_visual = np.load("Visual/experience_visual.npy")
-
 # Learning
 ages_sonata = np.load("Learning/ages_sonata.npy")
 APM_post = np.load("Learning/APM_post.npy")
@@ -168,8 +161,6 @@ vectorized_high_tango = (FCs_high_tango[triu_idx, :].T).T
 vectorized_low_tango = (FCs_low_tango[triu_idx, :].T).T
 vectorized_SC1 = (FCs_SC1[triu_idx, :].T).T
 vectorized_SC2 = (FCs_SC2[triu_idx, :].T).T
-vectorized_nonvisual = (FCs_nonvisual[triu_idx, :].T).T
-vectorized_visual = (FCs_visual[triu_idx, :].T).T	
 vectorized_sonata_post = (FCs_sonata_post[triu_idx, :].T).T
 vectorized_sonata_pre = (FCs_sonata_pre[triu_idx, :].T).T
 vectorized_sonata_post_active = (FCs_sonata_post_active[triu_idx, :].T).T
@@ -179,7 +170,7 @@ vectorized_sonata_pre_active = (FCs_sonata_pre_active[triu_idx, :].T).T
 #%%
 
 # Number of repetitions for SVM
-reps = 15
+reps = 3
 
 # Arrays to save results across repetitions
 rreps = np.zeros(reps)  # Stores correlation results for each repetition
@@ -201,8 +192,6 @@ gap_high_tango = np.zeros((n_splits, reps, vectorized_high_tango.shape[1]))
 gap_low_tango = np.zeros((n_splits, reps, vectorized_low_tango.shape[1]))
 gap_SC1 = np.zeros((n_splits, reps, vectorized_SC1.shape[1]))
 gap_SC2 = np.zeros((n_splits, reps, vectorized_SC2.shape[1]))
-gap_nonvisual = np.zeros((n_splits, reps, vectorized_nonvisual.shape[1]))
-gap_visual = np.zeros((n_splits, reps, vectorized_visual.shape[1]))
 gap_sonata_post = np.zeros((n_splits, reps, vectorized_sonata_post.shape[1]))
 gap_sonata_pre = np.zeros((n_splits, reps, vectorized_sonata_pre.shape[1]))
 gap_sonata_post_active = np.zeros((n_splits, reps, vectorized_sonata_post_active.shape[1]))
@@ -212,7 +201,7 @@ gap_sonata_pre_active = np.zeros((n_splits, reps, vectorized_sonata_pre_active.s
 feature_importances = np.zeros((reps, n_splits, new_pairs))
 
 # Load SVM parameters from an external file
-params = np.load('params_svm.npy')
+params = np.load('params_SVM.npy')
 
 # Start timing the process
 init = time.time()
@@ -292,15 +281,6 @@ for k in range(reps):
         Y_pred_sonata_post_active = regr.predict(X_sonata_post_active.T)
         gap_sonata_post_active[counter, k, :] = (Y_pred_sonata_post_active - ages_sonata_active) - (a * ages_sonata_active + b)
         
-        # Visual group
-        X_visual = vectorized_visual
-        Y_pred_visual = regr.predict(X_visual.T)
-        gap_visual[counter, k, :] = (Y_pred_visual - ages_visual) - (a * ages_visual + b)
-        
-        X_nonvisual = vectorized_nonvisual
-        Y_pred_nonvisual = regr.predict(X_nonvisual.T)
-        gap_nonvisual[counter, k, :] = (Y_pred_nonvisual - ages_nonvisual) - (a * ages_nonvisual + b)
-
         # Extract top 10 features from the trained SVM model
         feature_importances[k, counter, :] = regr.coef_
         
@@ -315,13 +295,12 @@ for k in range(reps):
 # Print total time taken for the loop
 print(time.time() - init)
 
+#%%
 # Calculate mean gaps for each group across folds and repetitions
 gap_high_tango = np.mean(np.mean(gap_high_tango, 0), 0)
 gap_low_tango = np.mean(np.mean(gap_low_tango, 0), 0)
 gap_SC1 = np.mean(np.mean(gap_SC1, 0), 0)
 gap_SC2 = np.mean(np.mean(gap_SC2, 0), 0)
-gap_nonvisual = np.mean(np.mean(gap_nonvisual, 0), 0)
-gap_visual = np.mean(np.mean(gap_visual, 0), 0)
 gap_sonata_post = np.mean(np.mean(gap_sonata_post, 0), 0)
 gap_sonata_pre = np.mean(np.mean(gap_sonata_pre, 0), 0)
 gap_sonata_post_active = np.mean(np.mean(gap_sonata_post_active, 0), 0)
@@ -330,8 +309,7 @@ gap_sonata_pre_active = np.mean(np.mean(gap_sonata_pre_active, 0), 0)
 
 # For compunting the standardize brain age gaps (BAGs) across all expert groups to obtain z-scores
 all_bags = np.concatenate((gap_high_tango, gap_low_tango, 
-                           gap_SC1, gap_SC2, 
-                           gap_visual, gap_nonvisual)) 
+                           gap_SC1, gap_SC2)) 
 
 # Adjust gaps for each group by subtracting their pairwise mean
 mean_gaming = 0.5 * (np.mean(gap_SC1) + np.mean(gap_SC2))
@@ -339,9 +317,6 @@ gap_SC1, gap_SC2 = gap_SC1 - mean_gaming, gap_SC2 - mean_gaming
 
 mean_tango = 0.5 * (np.mean(gap_high_tango) + np.mean(gap_low_tango))
 gap_high_tango, gap_low_tango = gap_high_tango - mean_tango, gap_low_tango - mean_tango
-
-mean_visual = 0.5 * (np.mean(gap_visual) + np.mean(gap_nonvisual))
-gap_visual, gap_nonvisual = gap_visual - mean_visual, gap_nonvisual - mean_visual
 
 mean_sonata = 0.5 * (np.mean(gap_sonata_post) + np.mean(gap_sonata_pre))
 gap_sonata_post, gap_sonata_pre = gap_sonata_post - mean_sonata, gap_sonata_pre - mean_sonata
@@ -413,16 +388,6 @@ plt.ylim(-27 - 3, 33)
 plt.xticks([0, 1], ['Experts', 'Non-Experts'], fontsize=15)
 plt.yticks([-27, -7, 13, 33], fontsize=15)
 
-# Visual artists group
-ax = plt.subplot(2, 3, 3)
-violin_plot(ax, [gap_visual, gap_nonvisual], ['skyblue', 'salmon'], 0.8, 20, 20)
-print_stats("Visual artists", gap_visual, gap_nonvisual)
-plt.ylabel('BAG (years)', fontsize=18)
-plt.xlabel('Groups', fontsize=18)
-plt.title('Visual artists', fontsize=18)
-plt.ylim(-16 - 1.8, 20)
-plt.xticks([0, 1], ['Experts', 'Non-Experts'], fontsize=15)
-plt.yticks([-16, -4, 8, 20], fontsize=15)
 
 # Gaming group
 ax = plt.subplot(2, 3, 4)
@@ -473,13 +438,6 @@ delta = np.mean(gap_high_tango) - np.mean(gap_low_tango)
 pvals.append(p_val)
 labels.append("Tango dancers")
 
-# Visual artists
-...
-t_stat, p_val = stats.ttest_ind(gap_visual, gap_nonvisual)
-...
-pvals.append(p_val)
-labels.append("Visual artists")
-
 # Gaming
 ...
 t_stat, p_val = stats.ttest_ind(gap_SC1, gap_SC2)
@@ -527,19 +485,17 @@ gap_tango = np.append(gap_high_tango, gap_low_tango)
 # Z-score normalization for expertise-related measures
 zh_tango = stats.zscore(hours_tango[hours_tango > 0])
 zh_games = stats.zscore(playing_time[playing_time > 0])
-zh_visual = stats.zscore(experience_visual)
 
 # Z-score normalization for BAGs
 zg_tango = stats.zscore(gap_tango)[hours_tango > 0]
 zg_games = stats.zscore(gap_SC1)[playing_time > 0]
-zg_visual = stats.zscore(gap_visual)
 
 # Store p-values
 pvals = []
 
 # Combine data
-xt = np.concatenate((zh_tango, zh_visual, zh_games))
-yt = np.concatenate((zg_tango, zg_visual, zg_games))
+xt = np.concatenate((zh_tango, zh_games))
+yt = np.concatenate((zg_tango, zg_games))
 
 # Plot
 plt.scatter(xt, yt, c='darkblue', s=100, alpha=0.5)
@@ -659,22 +615,21 @@ def calculate_and_correct_metrics(FCs_group1, FCs_group2, thresholds):
 # Calculate and adjust metrics for each pair of groups using the defined functions
 GE_high_tango, GE_low_tango, LE_high_tango, LE_low_tango = calculate_and_correct_metrics(FCs_high_tango, FCs_low_tango, thresholds)
 GE_SC1, GE_SC2, LE_SC1, LE_SC2 = calculate_and_correct_metrics(FCs_SC1, FCs_SC2, thresholds)
-GE_nonvisual, GE_visual, LE_nonvisual, LE_visual = calculate_and_correct_metrics(FCs_nonvisual, FCs_visual, thresholds)
 GE_sonata_post, GE_sonata_pre, LE_sonata_post, LE_sonata_pre = calculate_and_correct_metrics(FCs_sonata_post, FCs_sonata_pre, thresholds)
 
 
 #%%
 
 # Load pre-computed global coupling values
-Gs_experts = np.load('Global_coupling/Gs_experts.npy')
+Gs_experts = np.load('Global_coupling/Gs_experts.npy')[:-30]
 Gs_training = np.load('Global_coupling/Gs_training.npy')
 
 # Z-score normalization for BAGs
 z_bags = stats.zscore(all_bags)
 
 # Combine GE and LE metrics across expert groups
-all_GE = np.concatenate((GE_high_tango, GE_low_tango, GE_SC1, GE_SC2, GE_nonvisual, GE_visual))
-all_LE = np.concatenate((LE_high_tango, LE_low_tango, LE_SC1, LE_SC2, LE_nonvisual, LE_visual))
+all_GE = np.concatenate((GE_high_tango, GE_low_tango, GE_SC1, GE_SC2))
+all_LE = np.concatenate((LE_high_tango, LE_low_tango, LE_SC1, LE_SC2))
 
 ps = []
 labels = []
@@ -891,7 +846,7 @@ dist_matrix = np.delete(dist_matrix, np.array([36,37,40,41,70,71,72,73,74,75,76,
 
 # Surrogate testing
 base_D = Base(x=Ds_experts, D=dist_matrix)
-surr_number = 10000
+surr_number = 1000
 surrogates_D = base_D(n=surr_number)
 
 true_corr = stats.pearsonr(corr_vec, Ds_experts)[0]
@@ -964,11 +919,11 @@ for label, corrected_p in zip(labels, pvals_corrected):
 #%%
 #surrogate data
 base_experts = Base(x = Ds_experts, D = dist_matrix)
-surr_number = 10000
+surr_number = 100
 surrogates_experts = base_experts(n = surr_number)
 
 base_training = Base(x = Ds_training, D = dist_matrix)
-surr_number = 10000
+surr_number = 100
 surrogates_training = base_training(n = surr_number)
 
 # Load parcellated data and cognitive terms
