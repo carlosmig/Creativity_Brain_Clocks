@@ -13,7 +13,7 @@ This repository contains the code, data organization, and materials for the stud
 
 We developed and tested brain age prediction models, spin-based surrogate testing, functional connectivity analyses, and cognitive decoding, combining these with behavioral data on creative expertise and training interventions.
 
-Individual data related to music and visual expertise design is available upon request and was not included here due to GDPR regulations.
+Individual data related to music expertise design, and visual expertise as well, are available upon request and was not included here due to GDPR regulations.
 
 ## Repository Structure
 
